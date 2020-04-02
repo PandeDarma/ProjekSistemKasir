@@ -1,7 +1,9 @@
 @extends('templates.home1')
 
 @section('title',"Barang")
-
+@section('role')
+    @include('templates.admin')
+@endsection
 
 @section('container')
 <input type="hidden" name="" id="nav" value="Daftar Barang">
@@ -87,7 +89,7 @@
                     </tbody>
                     
                 </table>
-                {{-- {{$barang->links()}} --}}
+                {{$barang->links()}}
             </div>
             </div>
             

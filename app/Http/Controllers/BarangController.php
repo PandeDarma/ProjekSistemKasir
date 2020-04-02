@@ -15,7 +15,7 @@ class BarangController extends Controller
     public function index()
     {
 
-        $barang = Barang::all();
+        $barang = Barang::paginate(4);
         $stock = Stock::all();
         $lokasi = Lokasi::all();
 

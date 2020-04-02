@@ -103,31 +103,7 @@
     <div id="wrapper">
   
       <!-- Sidebar -->
-      <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion toggled" id="accordionSidebar">
-  
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-          <div class="sidebar-brand-icon ">
-            <i class="fas fa-briefcase"></i>
-          </div>
-          <div class="sidebar-brand-text mx-3">Toko</div>
-        </a>
-    
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-           <!-- Heading -->
-              <div class="sidebar-heading pt-3">
-                Barang
-              </div>
-  <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item" data-value="Daftar Barang">
-          <a class="nav-link collapsed" href="{{url('/barang')}}"  >
-              <i class="fas fa-fw fa-cog"></i>
-              <span>Daftar Barang</span>
-            </a>
-          </li>
-      </ul>
+      @yield('role')
       
       <!-- End of Sidebar -->
   
