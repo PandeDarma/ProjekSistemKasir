@@ -17,11 +17,9 @@
                   </div>                    
                 @endif
                 <h1 class="style-3">Daftar Barang</h1>
-            <div class="row">
-                    <div class="col-lg-6 col-md-12 mb-3">
-                            <a href="{{url('/barang/tambah')}}" class="btn btn-success mt-3">Tambah Barang</a>
-                     </div>
-                    <div class="col-lg-6 col-md-12 mr-auto">
+            <div class="row justify-content-end">
+                    
+                    <div class="col-lg-6 col-md-12">
                         <form action="{{url('/barang')}}" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" name="keyword" autocomplete="off" aria-label="Dollar amount (with dot and two decimal places)">

@@ -17,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', 'BarangController@index');
+// barang
+Route::get('/barang', 'BarangController@index');
+Route::get('/barang/tambah', 'BarangController@tambah');
+Route::patch('/barang', 'BarangController@addBarang');
+Route::delete('/barang/{barang}', 'BarangController@delete');
+Route::get('/barang/{barang}/edit', 'BarangController@edit');
+Route::put('/barang/{barang}', "BarangController@editBarang");
+Route::get('/barang/kategori', "BarangController@tambahkategori");
+Route::post('/barang/kategori', "BarangController@addKategori");
+// kasir
+Route::get("/stock", 'TransaksiController@stock');
