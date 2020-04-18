@@ -12,6 +12,11 @@ class Stock extends Model
     protected $fillable = ["barcode", "lokasi_id", "stock"];
     public $timestamps = false;
 
+    public function barang()
+    {
+        return $this->hasMany('App\Barang', 'barcode', 'barcode');
+    }
+
     public static function joinbarangdelete($barcode)
     {
         return DB::table('stock')->join('barang', 'barang.barcode', '=', 'stock.barcode')->where('barang.barcode', $barcode)->delete();

@@ -8,13 +8,30 @@ use App\Barang;
 use App\Kategori;
 use App\Lokasi;
 use App\Stock;
-use DB;
+use App\User;
+use Illuminate\Support\Facades\Gate;
+
+
+
 
 class BarangController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware(function ($request, $next) {
+            if (Gate::allows('admin') || Gate::allows('owner')) {
+                return $next($request);
+            } else {
+                return redirect('/kasir');
+            }
+        });
+    }
     //
     public function index(Request $request)
     {
+
         // mengambil semua data dari model
         $stock = Stock::all();
         $lokasi = Lokasi::all();
@@ -120,23 +137,27 @@ class BarangController extends Controller
         $gudang = Stock::where('lokasi_id', 1)
             ->where('barcode', $request->barcode)->first()->stock;
 
-        foreach ($lokasi as $l) {
-            // melakukan perulangan dan jika showcase ditambah maka stock gudang berkurang
-            $datalama =  Stock::where('lokasi_id', $l->id)
-                ->where('barcode', $request->barcode)->get();
-            foreach ($datalama as $lm) {
-                if ($lm->lokasi_id == $l->id) {
-                    if ($lm->lokasi_id == 2 && $l->id == 2) {
-                        $stock = $gudang - $request->input($l->nama);
-                        Stock::where('lokasi_id', 1)
-                            ->where('barcode', $request->barcode)->update(['stock' => $stock]);
-                    }
-                    $stock = $lm->stock + $request->input($l->nama);
-                }
-            }
-            Stock::where('lokasi_id', $l->id)
-                ->where('barcode', $request->barcode)->update(['stock' => $stock]);
-        }
+        // update stock pada gudang jika terisi
+        $stock = $request->input('gudang');
+        $stocklama = Stock::where('barcode', $request->barcode)
+            ->where('lokasi_id', 1)->first();
+        $stockbaru = (int) $stock + (int) $stocklama->stock;
+        Stock::where('barcode', $request->barcode)
+            ->where('lokasi_id', 1)->update(['stock' => $stockbaru]);
+        //update stock pada showcase jika terisi
+        $stock = $request->input('showcase');
+        $stocklama = Stock::where('barcode', $request->barcode)
+            ->where('lokasi_id', 2)->first();
+        $stocklamaG = Stock::where('barcode', $request->barcode)
+            ->where('lokasi_id', 1)->first()->stock;
+        $stockbaruG = (int) $stocklamaG - $stock;
+        $stockbaru = (int) $stock + (int) $stocklama->stock;
+        Stock::where('barcode', $request->barcode)
+            ->where('lokasi_id', 2)->update(['stock' => $stockbaru]);
+        Stock::where('barcode', $request->barcode)
+            ->where('lokasi_id', 1)->update(['stock' => $stockbaruG]);
+
+
 
         return redirect('/barang')->with('flash', "Data Berhasil Di Edit");
     }

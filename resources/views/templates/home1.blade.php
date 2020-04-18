@@ -103,7 +103,16 @@
     <div id="wrapper">
   
       <!-- Sidebar -->
-      @yield('role')
+      @if(Auth::user()->role_id==1)
+        @include('templates.owner')
+      
+      @elseif(Auth::user()->role_id==2)
+        @include('templates.admin')
+      
+      @else 
+        @include('templates.kasir')
+      
+      @endif
       
       <!-- End of Sidebar -->
   
@@ -149,7 +158,7 @@
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->name}}</span>
                 <img class="img-profile rounded-circle" src="{{asset('assets/foto/default.png')}}">
                 </a>
                 <!-- Dropdown - User Information -->
@@ -221,7 +230,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <form action="{{url('/')}}" method="post">
+          <form action="{{route('logout')}}" method="post">
             @csrf
             <button type="submit" class="btn btn-primary mt-3">Logout</button>
           </form>
@@ -257,7 +266,6 @@
      $('li.nav-item').removeClass('active');
       
      let navitem= $('input#nav').val();
-   
      $('li.nav-item').each(function(index){
        if( $(this).attr("data-value")==navitem){
          $(this).addClass('active');

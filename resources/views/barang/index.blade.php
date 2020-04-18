@@ -1,9 +1,7 @@
 @extends('templates.home1')
 
 @section('title',"Barang")
-@section('role')
-    @include('templates.admin')
-@endsection
+
 
 @section('container')
 <input type="hidden" name="" id="nav" value="Daftar Barang">
@@ -57,15 +55,20 @@
                         <td scope="row">{{$b->nama}}</td>  
                             <td class="text-capitalize">
                                  @if (!$b->kategorinama)
-                                    {{$b->kategori->nama}}                           
-                                        
+                                    {{$b->kategori->nama}}                        
                                     @else
                                         {{$b->kategorinama}}
                         
                                 @endif
                         </td>                            
                         <td>{{$b->harga}}</td> 
-                        @foreach ($lokasi as $l)
+                        @foreach ($b->stocks as $s)
+                            <td>
+                                {{$s->stock}}
+                            </td>
+                        @endforeach
+
+                        {{-- @foreach ($lokasi as $l)
                             <td>
                                 @foreach ($stock as $s)
                                     @if ($b->barcode==$s->barcode&&$l->id==$s->lokasi_id)
@@ -73,7 +76,7 @@
                                     @endif
                                 @endforeach
                             </td>
-                        @endforeach                       
+                        @endforeach                        --}}
                         <td> 
                             <form action="barang/{{$b->id}}" method="post" class="d-inline">
                                 @method("delete")

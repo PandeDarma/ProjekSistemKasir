@@ -16,6 +16,10 @@ class Barang extends Model
     {
         return $this->belongsTo('App\Kategori');
     }
+    public function stocks()
+    {
+        return $this->hasMany('App\Stock', 'barcode', 'barcode');
+    }
 
     // mencari data barang berdasarkan key
     public static function joinkategoriwithkey($key)
